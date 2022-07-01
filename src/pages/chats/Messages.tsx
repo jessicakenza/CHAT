@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { DeviceEventEmitter, PermissionsAndroid, StyleSheet } from 'react-native';
+import { DeviceEventEmitter, PermissionsAndroid, SafeAreaView, StyleSheet } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 import SmsAndroid from 'react-native-get-sms-android';
 import SmsListener from 'react-native-android-sms-listener'
@@ -92,7 +92,7 @@ const Messages = ({route,navigation}) => {
   }, [])
 
   return (
-    <View style={{flex: 1}} >
+    <SafeAreaView style={{flex: 1,marginTop:25}} >
       <View style={{flexDirection:'row',alignItems:'center',height:70,backgroundColor:'white'}}>
         <Ionicons name="arrow-back" style={{marginLeft:16, marginRight:15}} size={30} onPress={()=> navigation.goBack()} />
         {contact.item.image == '' ? (
@@ -138,7 +138,7 @@ const Messages = ({route,navigation}) => {
           _id: 1,
         }}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

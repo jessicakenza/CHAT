@@ -10,7 +10,7 @@ const Tabs = () => {
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
-        // headerShown: false,
+        headerShown: false,
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
 

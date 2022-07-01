@@ -1,3 +1,4 @@
+import { Icon } from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {
   FlatList,
@@ -11,11 +12,17 @@ import {
   View,
 } from 'react-native';
 import Contacts, {getCount} from 'react-native-contacts';
+import Search from '../../components/Search';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import CHeader from '../../components/Header';
+
 
 const PContacts = ({navigation}) => {
   const [data, setData] = useState([]);
   const [secondData, setSecondData] = useState([]);
-
+  const [onSearch, setOnSearch] = useState(true);
+  const [value, setValue] = useState('');
+  
   PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_CONTACTS, {
     title: 'Contacts',
     message: 'This app would like to view your contacts.',
@@ -40,7 +47,7 @@ const PContacts = ({navigation}) => {
       if (permission === 'denied') {
         // x.x
         console.log('permission denied: ', permission);
-        alert("vous n'avez pas acces a l'application");
+        // alert("vous n'avez pas acces a l'application");
       }
     });
   }, []);
@@ -64,7 +71,7 @@ const PContacts = ({navigation}) => {
       contactsArr = [
         ...contactsArr,
         {
-          contactId: item.rawContactId,
+          // contactId: item.rawContactId,
           displayName: item.displayName,
           image: item.thumbnailPath,
           familyName: item.familyName,
@@ -73,10 +80,23 @@ const PContacts = ({navigation}) => {
       ];
     });
     setData(contactsArr);
+    setSecondData(contactsArr)
   };
-  // console.log('data.phone: ', data.phoneNumbers);
+
+  const filterData = (array, value) => {
+    const filtered = [...array].filter((contact) => {
+      if (contact?.displayName !== null) {
+        return contact?.displayName?.toString().toLowerCase().includes(value.toLowerCase());
+      }
+    });
+    setSecondData(filtered);
+  };
+  const onPress = () => {
+    setOnSearch(!onSearch);
+    // console.log('onPress ICon: ', onSearch);
+  };
+
   const renderItem = item => {
-    // console.log("items: ",item.item);
     return (
       <TouchableOpacity
         style={{flexDirection: 'row', width: '100%', margin: 10}}
@@ -126,8 +146,39 @@ const PContacts = ({navigation}) => {
 
   return (
     <View style={{justifyContent: 'space-between'}}>
+      {onSearch ? (
+        <CHeader
+          icon1="menu"
+          label="Contact"
+          icon2="search"
+          onPress={onPress}
+        />
+      ) : (
+        <View style={styles.searchContainer}>
+          <Ionicons
+            name="arrow-back"
+            onPress={() => setOnSearch(!onSearch)}
+            style={styles.icon}
+          />
+          <Search
+            // value={value}
+            placeholder="search Contact"
+            onChangeText={val => {
+              setValue(val);
+              if (val !== '') {
+                filterData(data, val);
+              } else setData(data);
+            }}
+          />
+          <Ionicons
+            name="close"
+            onPress={() => setValue('')}
+            style={styles.icon}
+          />
+        </View>
+      )}
       <FlatList
-        data={data}
+        data={secondData}
         keyExtractor={item => item.contactId}
         renderItem={renderItem}
       />
@@ -135,6 +186,20 @@ const PContacts = ({navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  searchContainer: {
+    backgroundColor:"white",
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    height: 57,
+    width: '100%',
+  },
+  icon:{
+    color: 'black', 
+    paddingHorizontal: 16 ,
+    fontSize:25
+  }
+});
 
 export default PContacts;
