@@ -4,6 +4,7 @@ import {StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SmsRetriever from 'react-native-sms-retriever';
+import SmsAndroid from 'react-native-get-sms-android';
 
 const Discussions = ({navigation}) => {
   const _onSmsListenerPressed = async () => {
@@ -19,6 +20,9 @@ const Discussions = ({navigation}) => {
       console.log(JSON.stringify(error));
     }
   };
+
+ 
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Discussions page</Text>
