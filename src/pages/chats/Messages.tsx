@@ -1,20 +1,64 @@
-import {Text, View} from 'native-base';
-import React from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import React, { useCallback, useEffect, useState } from 'react';
+import { StyleSheet } from 'react-native';
+import { GiftedChat } from 'react-native-gifted-chat';
+import SendSMS from 'react-native-sms'
 
 const Messages = ({navigation}) => {
+  const [messages, setMessages] = useState([]);
+
+  // someFunction() {
+  //   SendSMS.send({
+  //     body: 'The default body of the SMS!',
+  //     recipients: ['697606274', '656862809'],
+  //     successTypes: ['sent', 'queued'],
+  //     allowAndroidSendWithoutReadPermission: true
+  //   }, (completed, cancelled, error) => {
+  
+  //     console.log('SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error);
+  
+  //   });
+  // }
+
+  useEffect(() => {
+    setMessages([
+      {
+        _id: 1,
+        text: 'Hello developer',
+        createdAt: new Date(),
+        user: {
+          _id: 2,
+          name: 'React Native',
+          avatar: 'https://placeimg.com/140/140/any',
+        },
+      },
+    ])
+
+    SendSMS.send({
+      body: 'The default body of the SMS!',
+      recipients: ['697606274', '656862809'],
+      successTypes: ['sent', 'queued'],
+      allowAndroidSendWithoutReadPermission: true
+    }, (completed, cancelled, error) => {
+  
+      console.log('SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error);
+  
+    });
+
+  }, [])
+
+  const onSend = useCallback((messages = []) => {
+    setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
+  }, [])
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Messages page</Text>
-      <TouchableOpacity
-        style={{flexDirection: 'row', alignItems: 'center'}}
-        onPress={() => navigation.goBack()}>
-        <Icon name="arrow-left" color="rgb(255,90,50)" size={16} />
-        <Text style={styles.button}>Press to goback</Text>
-      </TouchableOpacity>
-    </View>
-  );
+    <GiftedChat
+      messages={messages}
+      onSend={messages => onSend(messages)}
+      user={{
+        _id: 1,
+      }}
+    />
+  )
 };
 
 export default Messages;

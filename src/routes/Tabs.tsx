@@ -2,6 +2,7 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {ChatStack, ContactStack, HomeStack} from './stacks';
+import Login from '../pages/auths/login';
 
 const Tab = createBottomTabNavigator();
 const Tabs = () => {
@@ -20,6 +21,8 @@ const Tabs = () => {
             iconName = focused ? 'chatbubbles' : 'chatbubbles-outline';
           } else if (route.name === 'Contacts') {
             iconName = focused ? 'ios-people' : 'ios-people-outline';
+          }else if (route.name === 'Login') {
+            iconName = focused ? 'ios-person' : 'ios-person-outline';
           }
 
           // You can return any component that you like here!

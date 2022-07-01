@@ -1,26 +1,12 @@
-import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
-import {Text, View} from 'native-base';
+import { createStackNavigator } from '@react-navigation/stack';
+import React, { Profiler } from 'react';
 import Login from '../pages/auths/login';
-import Home from '../pages/home';
 import Tabs from './Tabs';
+import Etat from '../pages/gestion/etat';
+import Profile from '../pages/auths/profil';
+import Messages from '../pages/chats/Messages';
 
 const Stack = createStackNavigator();
-function HomeScreen() {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Home!</Text>
-    </View>
-  );
-}
-
-function SettingsScreen() {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
 
 export default function Nav() {
   return (
@@ -29,6 +15,9 @@ export default function Nav() {
         headerShown: false,
       }}>
       <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="Messages" component={Messages} />
+      <Stack.Screen name= "Etat" component={Etat} />
       <Stack.Screen name="tabs" component={Tabs} />
     </Stack.Navigator>
   );

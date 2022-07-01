@@ -1,4 +1,3 @@
-// 1. import `NativeBaseProvider` component
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {NativeBaseProvider, Text, View} from 'native-base';

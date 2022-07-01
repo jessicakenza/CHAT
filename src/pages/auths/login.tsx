@@ -1,6 +1,6 @@
-import {Text, View} from 'native-base';
+import { Text, View } from 'native-base';
 import React from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 
 const Login = ({navigation}) => {
   return (
@@ -10,7 +10,7 @@ const Login = ({navigation}) => {
         style={styles.login}
         onPress={() => navigation.navigate('tabs')}>
         <Text style={styles.text}>Press to Login </Text>
-      </TouchableOpacity>
+      </TouchableOpacity> 
 </View>
   );
 };
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     color:'white'
   },
   login:{
-    backgroundColor:'#707070',
+    backgroundColor:'red',
     borderRadius:20,
   }
 });
