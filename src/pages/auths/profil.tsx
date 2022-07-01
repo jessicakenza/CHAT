@@ -12,10 +12,11 @@ import {
 } from 'native-base';
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Profile = ({navigation}) => {
   return (
-    <ScrollView contentContainerStyle={{alignItems:'center'}} >
+    <ScrollView contentContainerStyle={{alignItems: 'center'}}>
       <Box safeArea p="2" py="8" w="90%" maxW="290">
         <Heading
           size="lg"
@@ -56,7 +57,10 @@ const Profile = ({navigation}) => {
               Forget Password?
             </Link>
           </FormControl>
-          <Button mt="2" colorScheme="indigo">
+          <Button
+            mt="2"
+            colorScheme="indigo"
+            onPress={() => navigation.navigate('tabs')}>
             Sign in
           </Button>
           <HStack mt="6" justifyContent="center">
@@ -68,15 +72,9 @@ const Profile = ({navigation}) => {
               }}>
               I'm a new user.{' '}
             </Text>
-            <Link
-              _text={{
-                color: 'indigo.500',
-                fontWeight: 'medium',
-                fontSize: 'sm',
-              }}
-              href="#">
-              Sign Up
-            </Link>
+            <TouchableOpacity onPress={()=> navigation.navigate('register') } >
+              <Text style={styles.text}>Sign Up</Text>
+            </TouchableOpacity>
           </HStack>
         </VStack>
       </Box>
@@ -102,5 +100,8 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderColor: 'blue'
+  },
+  text:{
+    color: 'blue',
   }
 });

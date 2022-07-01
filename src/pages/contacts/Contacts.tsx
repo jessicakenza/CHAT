@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import Contacts, {getCount} from 'react-native-contacts';
 
-const PContacts = () => {
+const PContacts = ({navigation}) => {
   const [data, setData] = useState([]);
   const [secondData, setSecondData] = useState([]);
 
@@ -33,6 +33,7 @@ const PContacts = () => {
       }
       if (permission === 'authorized') {
         // yay!
+        // alert("vous avez acces a l'application");
         getContacts();
         console.log('permission authorized: ', permission);
       }
@@ -58,7 +59,7 @@ const PContacts = () => {
       }
       return 0;
     });
-    console.log('Contact used data: ', result);
+    // console.log('Contact used data: ', result);
     result.forEach(item => {
       contactsArr = [
         ...contactsArr,
@@ -73,12 +74,14 @@ const PContacts = () => {
     });
     setData(contactsArr);
   };
-  console.log('data.phone: ', data.phoneNumbers);
+  // console.log('data.phone: ', data.phoneNumbers);
   const renderItem = item => {
     // console.log("items: ",item.item);
     return (
       <TouchableOpacity
-        style={{flexDirection: 'row', width: '100%', margin: 10}}>
+        style={{flexDirection: 'row', width: '100%', margin: 10}}
+        onPress={() => navigation.navigate('Messages',{contact:item}) }
+        >
         {item.item.image == '' ? (
           <View
             style={{

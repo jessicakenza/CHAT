@@ -1,25 +1,18 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { DeviceEventEmitter, StyleSheet } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
-import SendSMS from 'react-native-sms'
+import SmsAndroid from 'react-native-get-sms-android';
 
-const Messages = ({navigation}) => {
+const Messages = ({route}) => {
   const [messages, setMessages] = useState([]);
-
-  // someFunction() {
-  //   SendSMS.send({
-  //     body: 'The default body of the SMS!',
-  //     recipients: ['697606274', '656862809'],
-  //     successTypes: ['sent', 'queued'],
-  //     allowAndroidSendWithoutReadPermission: true
-  //   }, (completed, cancelled, error) => {
+  const[ message, setMessage]=useState([]);
+  const {contact}=route.params;
+  const phoneNumber = contact.item.phoneNumber;
   
-  //     console.log('SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error);
-  
-  //   });
-  // }
+  console.log("contact : ", contact.item.phoneNumber);
 
   useEffect(() => {
+    // _onSmsListenerPressed();
     setMessages([
       {
         _id: 1,
@@ -33,27 +26,37 @@ const Messages = ({navigation}) => {
       },
     ])
 
-    SendSMS.send({
-      body: 'The default body of the SMS!',
-      recipients: ['697606274', '656862809'],
-      successTypes: ['sent', 'queued'],
-      allowAndroidSendWithoutReadPermission: true
-    }, (completed, cancelled, error) => {
-  
-      console.log('SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error);
-  
-    });
-
+    
+    
   }, [])
+
+  
+  
+  DeviceEventEmitter.addListener('sms_onDelivery', (msg) => {
+    console.log(msg);
+  });
 
   const onSend = useCallback((messages = []) => {
     setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
+    SmsAndroid.autoSend(
+      phoneNumber,
+      messages[0].text,
+      (fail) => {
+        console.log('Failed with this error: ' + fail);
+      },
+      (success) => {
+        console.log(messages);
+        
+        console.log('SMS sent successfully');
+      },
+    );
   }, [])
 
   return (
     <GiftedChat
       messages={messages}
-      onSend={messages => onSend(messages)}
+      onSend={(messages) =>onSend(messages)
+      }
       user={{
         _id: 1,
       }}

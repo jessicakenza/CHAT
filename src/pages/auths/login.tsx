@@ -8,7 +8,7 @@ const Login = ({navigation}) => {
         <Text style={styles.title}>Login Page</Text>
       <TouchableOpacity
         style={styles.login}
-        onPress={() => navigation.navigate('tabs')}>
+        onPress={() => navigation.navigate('Profile')}>
         <Text style={styles.text}>Press to Login </Text>
       </TouchableOpacity> 
 </View>

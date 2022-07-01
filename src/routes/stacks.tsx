@@ -23,7 +23,7 @@ export function HomeStack() {
         }
         // headerShown: false,
       }}>
-        <Stack.Screen name="Profile" component={Profile} />
+        {/* <Stack.Screen name="Profile" component={Profile} /> */}
       <Stack.Screen name="Etat" component={Etat} />
       <Stack.Screen name="Home" component={Home} />
     </Stack.Navigator>

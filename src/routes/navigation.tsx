@@ -5,6 +5,7 @@ import Tabs from './Tabs';
 import Etat from '../pages/gestion/etat';
 import Profile from '../pages/auths/profil';
 import Messages from '../pages/chats/Messages';
+import register from '../pages/auths/register';
 
 const Stack = createStackNavigator();
 
@@ -16,8 +17,8 @@ export default function Nav() {
       }}>
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="register" component={register} />
       <Stack.Screen name="Messages" component={Messages} />
-      <Stack.Screen name= "Etat" component={Etat} />
       <Stack.Screen name="tabs" component={Tabs} />
     </Stack.Navigator>
   );
